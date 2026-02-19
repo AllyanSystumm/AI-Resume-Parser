@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    # ports:
+    #   - "8000:8000"
+    network_mode: host
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - /app/venv # Don't overwrite container's venv if it exists, though we don't use it in container
+
+  frontend:
+    build: ./frontend
+    # ports:
+    #   - "3000:3000"
+    network_mode: host
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend

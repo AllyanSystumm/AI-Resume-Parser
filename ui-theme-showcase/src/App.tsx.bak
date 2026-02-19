@@ -1,0 +1,208 @@
+import React, { useState } from 'react';
+import { Navbar, Card, Button, Input, Alert } from './components';
+import {
+  Users,
+  TrendingUp,
+  DollarSign,
+  Clock,
+  ArrowUpRight,
+  MoreHorizontal,
+  Envelope,
+  Phone,
+  LayoutDashboard,
+  FileText,
+  UserCircle
+} from 'lucide-react';
+
+function DashboardOverview() {
+  const stats = [
+    { label: 'Total Revenue', value: '$45,231.89', change: '+20.1%', icon: <DollarSign className="text-primary" /> },
+    { label: 'Active Users', value: '+2,350', change: '+15.5%', icon: <Users className="text-secondary" /> },
+    { label: 'Avg. Session', value: '12m 45s', change: '-2.4%', icon: <Clock className="text-warning" /> },
+    { label: 'Conversion', value: '12.5%', change: '+4.3%', icon: <TrendingUp className="text-success" /> },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div className="flex justify-between items-end">
+        <div>
+          <h1 className="text-4xl">Welcome back, Felix</h1>
+          <p className="text-text-secondary">Here's what's happening with your projects today.</p>
+        </div>
+        <Button>
+          <ArrowUpRight size={18} />
+          Export Report
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, i) => (
+          <Card key={i} className="flex flex-col gap-2">
+            <div className="flex justify-between items-start">
+              <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+                {stat.icon}
+              </div>
+              <span className={`text-sm font-bold ${stat.change.startsWith('+') ? 'text-success' : 'text-danger'}`}>
+                {stat.change}
+              </span>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-text-secondary mb-1">{stat.label}</p>
+              <h2 className="text-2xl font-black mb-0">{stat.value}</h2>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <Card className="lg:col-span-2" title="Revenue Forecast">
+          <div className="h-64 flex-center text-text-muted border-2 border-dashed border-white/5 rounded-2xl">
+            Chart Visualization Area
+          </div>
+        </Card>
+        <Card title="Recent Activity">
+          <div className="space-y-6">
+            {[1, 2, 3, 4].map((_, i) => (
+              <div key={i} className="flex gap-4 items-center">
+                <div className="h-10 w-10 rounded-full bg-primary/20 flex-center text-primary font-bold">
+                  JS
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-bold">John Smith</p>
+                  <p className="text-xs text-text-secondary">Updated the Q4 Roadmap</p>
+                </div>
+                <span className="text-[10px] text-text-muted uppercase font-bold">2m ago</span>
+              </div>
+            ))}
+          </div>
+          <Button variant="secondary" className="w-full mt-6">View All Activity</Button>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+function ProfileList() {
+  const users = [
+    { name: 'Alice Freeman', role: 'Product Designer', email: 'alice@stellar.tech', status: 'Online' },
+    { name: 'Mark Wilson', role: 'Full Stack Dev', email: 'mark@stellar.tech', status: 'Offline' },
+    { name: 'Sarah Connor', role: 'CTO', email: 'sarah@stellar.tech', status: 'Busy' },
+    { name: 'Dexter Morgan', role: 'Data Scientist', email: 'dex@stellar.tech', status: 'Online' },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-4xl">Team Directory</h1>
+        <p className="text-text-secondary">Manage and collaborate with your team members.</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        {users.map((user, i) => (
+          <Card key={i} className="text-center group">
+            <div className="relative inline-block mb-4">
+              <div className="w-24 h-24 rounded-3xl bg-surface-light border-4 border-white/5 mx-auto overflow-hidden transition-transform group-hover:scale-110 duration-300">
+                <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.name}`} alt={user.name} />
+              </div>
+              <div className={`absolute bottom-1 right-1 w-5 h-5 rounded-full border-4 border-surface ${user.status === 'Online' ? 'bg-secondary' : user.status === 'Busy' ? 'bg-danger' : 'bg-text-muted'}`}></div>
+            </div>
+            <h3 className="mb-0 text-xl font-black">{user.name}</h3>
+            <p className="text-sm text-primary font-bold mb-4">{user.role}</p>
+            <div className="flex justify-center gap-2 mb-6">
+              <button className="h-9 w-9 rounded-lg bg-surface-light border border-border flex-center hover:text-primary"><Envelope size={16} /></button>
+              <button className="h-9 w-9 rounded-lg bg-surface-light border border-border flex-center hover:text-primary"><Phone size={16} /></button>
+              <button className="h-9 w-9 rounded-lg bg-surface-light border border-border flex-center hover:text-primary"><MoreHorizontal size={16} /></button>
+            </div>
+            <Button variant="secondary" className="w-full">View Profile</Button>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FormPage() {
+  return (
+    <div className="max-w-2xl mx-auto space-y-8">
+      <div>
+        <h1 className="text-4xl">Account Settings</h1>
+        <p className="text-text-secondary">Update your personal and business information.</p>
+      </div>
+
+      <Alert type="warning">
+        Please ensure your email address is verified to receive billing notifications.
+      </Alert>
+
+      <Card title="Personal Information">
+        <form className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <Input label="First Name" placeholder="Felix" />
+            <Input label="Last Name" placeholder="Doe" />
+          </div>
+          <Input label="Email Address" type="email" placeholder="felix@example.com" />
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-text-secondary">Biography</label>
+            <textarea className="input min-h-[120px]" placeholder="Tell us about yourself..."></textarea>
+          </div>
+          <div className="flex justify-end gap-4 mt-8 pt-6 border-t border-border">
+            <Button variant="secondary">Cancel Replacement</Button>
+            <Button>Save Changes</Button>
+          </div>
+        </form>
+      </Card>
+
+      <Card title="Danger Zone" className="border-danger/30 bg-danger/5">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="font-bold">Delete Account</p>
+            <p className="text-sm text-text-secondary">Permanently remove your account and all data.</p>
+          </div>
+          <Button className="bg-danger hover:bg-danger/80">Delete</Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+function App() {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  return (
+    <div className="min-h-screen pb-20">
+      <Navbar />
+
+      <main className="container pt-4">
+        {/* Simple Tab Navigation */}
+        <div className="flex gap-4 mb-12 p-1.5 bg-surface rounded-2xl border border-border w-fit">
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all ${activeTab === 'dashboard' ? 'bg-primary text-white shadow-lg shadow-primary/25' : 'text-text-secondary hover:text-white'}`}
+          >
+            <LayoutDashboard size={18} />
+            Overview
+          </button>
+          <button
+            onClick={() => setActiveTab('form')}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all ${activeTab === 'form' ? 'bg-primary text-white shadow-lg shadow-primary/25' : 'text-text-secondary hover:text-white'}`}
+          >
+            <FileText size={18} />
+            Forms
+          </button>
+          <button
+            onClick={() => setActiveTab('profiles')}
+            className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all ${activeTab === 'profiles' ? 'bg-primary text-white shadow-lg shadow-primary/25' : 'text-text-secondary hover:text-white'}`}
+          >
+            <UserCircle size={18} />
+            Profiles
+          </button>
+        </div>
+
+        {activeTab === 'dashboard' && <DashboardOverview />}
+        {activeTab === 'form' && <FormPage />}
+        {activeTab === 'profiles' && <ProfileList />}
+      </main>
+    </div>
+  );
+}
+
+export default App;
