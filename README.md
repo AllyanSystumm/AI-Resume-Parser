@@ -59,3 +59,4 @@ An advanced AI-powered resume parser and candidate matching system.
 2. **Apply**: Use the application form to upload a resume for a specific job.
 3. **View Analysis**: Check the job dashboard to see ranked candidates and detailed AI analysis.
 4. **Chat**: Use the chat interface to ask questions about the candidates.
+   - **Integrated Chatbot**: The recruiter can ask directly, for example: "Give me the top scorer of the graphic designing job". The chatbot has full access to the database and can query candidate information.
